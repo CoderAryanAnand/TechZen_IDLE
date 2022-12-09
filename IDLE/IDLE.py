@@ -1,6 +1,8 @@
 import tkinter as tk
+from tkinter.constants import VERTICAL
 
 # TODO: create commands
+# https://stackoverflow.com/questions/68956736/how-to-change-the-height-or-width-of-tkinter-widget-with-mouse-drag-after-ini
 
 VERSION = "0.0.1"
 
@@ -29,10 +31,18 @@ class MyApp:
         self.runmenu.add_command(label="Run", command=self.run)
         self.menubar.add_cascade(label="Run", menu=self.runmenu)
 
-        self.box1Text = tk.Text(self.root, width=1, height=1)
-        self.box1Text.pack(fill=tk.BOTH,side=tk.TOP, expand=True)
-        self.box2Text = tk.Text(self.root, width=1, height=1)
-        self.box2Text.pack(fill=tk.BOTH,side=tk.BOTTOM, expand=True)
+        self.frame_navigator = tk.PanedWindow(self.root, orient=VERTICAL)
+
+        self.frame_navigator.configure(background="white", width=300, height=300)
+        self.frame_navigator.pack_propagate(0)
+
+        self.box1 = tk.Text(self.frame_navigator)
+        self.frame_navigator.add(self.box1)
+
+        self.box2 = tk.Text(self.frame_navigator, exportselection=False, state=tk.DISABLED)
+        self.frame_navigator.add(self.box2)
+
+        self.frame_navigator.pack(side=tk.TOP, expand=1, fill=tk.BOTH)
     
     def newfile():
         pass
